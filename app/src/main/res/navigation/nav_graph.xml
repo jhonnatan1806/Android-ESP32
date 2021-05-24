@@ -8,8 +8,12 @@
     <fragment
         android:id="@+id/FragmentShield"
         android:name="com.jhaner.esp32.view.FragmentShield"
-        android:label="Shields"
-        tools:layout="@layout/fragment_shield" />
+        android:label="Shields List"
+        tools:layout="@layout/fragment_shield" >
+        <action
+            android:id="@+id/action_FragmentShield_to_FragmentModule"
+            app:destination="@id/FragmentModule" />
+    </fragment>
     <fragment
         android:id="@+id/FragmentMode"
         android:name="com.jhaner.esp32.view.FragmentMode"
@@ -19,4 +23,9 @@
             android:id="@+id/action_FragmentMode_to_FragmentShield"
             app:destination="@id/FragmentShield" />
     </fragment>
+    <fragment
+        android:id="@+id/FragmentModule"
+        android:name="com.jhaner.esp32.view.FragmentModule"
+        android:label="Modules List"
+        tools:layout="@layout/fragment_module" />
 </navigation>
