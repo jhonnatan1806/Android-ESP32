@@ -1,5 +1,8 @@
 package com.jhaner.esp32.view;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.databinding.FragmentModeBinding;
 
@@ -34,10 +38,24 @@ public class FragmentMode extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        binding.modeWifi.setOnClickListener((View v) -> {
-            NavHostFragment.findNavController(FragmentMode.this)
-                    .navigate(R.id.action_FragmentMode_to_FragmentShield);
+        binding.modeWifi.setOnClickListener((View v) ->
+        {
+            ConnectivityManager connectivityManager = (ConnectivityManager)
+                    getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected())
+            {
+                NavHostFragment.findNavController(FragmentMode.this)
+                        .navigate(R.id.action_FragmentMode_to_FragmentShield);
+            }
+            else
+            {
+                Snackbar.make(view, "ERROR NO NETWORK CONNECTION", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+
         });
+
     }
 
     @Override
