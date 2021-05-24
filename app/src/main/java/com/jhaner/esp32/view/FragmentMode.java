@@ -17,10 +17,12 @@ public class FragmentMode extends Fragment {
 
     private FragmentModeBinding binding;
 
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-    }*/
+    }
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
@@ -29,20 +31,18 @@ public class FragmentMode extends Fragment {
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.modeWifi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(FragmentMode.this)
-                        .navigate(R.id.action_FragmentMode_to_FragmentShield);
-            }
+        binding.modeWifi.setOnClickListener((View v) -> {
+            NavHostFragment.findNavController(FragmentMode.this)
+                    .navigate(R.id.action_FragmentMode_to_FragmentShield);
         });
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         super.onDestroyView();
         binding = null;
     }
