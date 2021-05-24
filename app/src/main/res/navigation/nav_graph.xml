@@ -28,12 +28,12 @@
     <fragment
         android:id="@+id/FragmentShield"
         android:name="com.jhaner.esp32.view.FragmentShield"
-        android:label="fragment_shield"
+        android:label="Shields"
         tools:layout="@layout/fragment_shield" />
     <fragment
         android:id="@+id/FragmentMode"
         android:name="com.jhaner.esp32.view.FragmentMode"
-        android:label="fragment_mode"
+        android:label="Select mode"
         tools:layout="@layout/fragment_mode" >
         <action
             android:id="@+id/action_FragmentMode_to_FragmentShield"

@@ -21,7 +21,6 @@ public class FragmentMode extends Fragment {
 
     private FragmentModeBinding binding;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
