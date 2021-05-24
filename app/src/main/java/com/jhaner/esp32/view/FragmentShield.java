@@ -12,15 +12,14 @@ import android.view.ViewGroup;
 
 import com.jhaner.esp32.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentShield#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class FragmentShield extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -29,18 +28,9 @@ public class FragmentShield extends Fragment {
     private String mParam2;
 
     public FragmentShield() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentShield.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FragmentShield newInstance(String param1, String param2) {
         FragmentShield fragment = new FragmentShield();
         Bundle args = new Bundle();
@@ -57,6 +47,35 @@ public class FragmentShield extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        URL google = null;
+        try {
+            google = new URL("http://192.241.140.103/script.php?method=showshields");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(google.openStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String input = null;
+        StringBuffer stringBuffer = new StringBuffer();
+        while (true)
+        {
+            try {
+                if (!((input = in.readLine()) != null)) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stringBuffer.append(input);
+        }
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String htmlData = stringBuffer.toString();
     }
 
     @Override
