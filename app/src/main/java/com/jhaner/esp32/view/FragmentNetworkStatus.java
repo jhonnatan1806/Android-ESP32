@@ -61,8 +61,6 @@ public class FragmentNetworkStatus extends Fragment {
         if (networkInfo != null && networkInfo.isConnected())
         {
             // Si hay conexión a Internet en este momento
-            NavHostFragment.findNavController(FragmentNetworkStatus.this)
-                    .navigate(R.id.action_fragmentNetworkStatus_to_fragmentShield);
         }
         else
         {

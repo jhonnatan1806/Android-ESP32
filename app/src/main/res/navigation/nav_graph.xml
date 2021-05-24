@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentNetworkStatus">
+    app:startDestination="@id/FragmentMode">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -26,17 +26,17 @@
             app:destination="@id/FirstFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentNetworkStatus"
-        android:name="com.jhaner.esp32.view.FragmentNetworkStatus"
-        android:label="fragment_network_status"
-        tools:layout="@layout/fragment_network_status" >
-        <action
-            android:id="@+id/action_fragmentNetworkStatus_to_fragmentShield"
-            app:destination="@id/fragmentShield" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentShield"
+        android:id="@+id/FragmentShield"
         android:name="com.jhaner.esp32.view.FragmentShield"
         android:label="fragment_shield"
         tools:layout="@layout/fragment_shield" />
+    <fragment
+        android:id="@+id/FragmentMode"
+        android:name="com.jhaner.esp32.view.FragmentMode"
+        android:label="fragment_mode"
+        tools:layout="@layout/fragment_mode" >
+        <action
+            android:id="@+id/action_FragmentMode_to_FragmentShield"
+            app:destination="@id/FragmentShield" />
+    </fragment>
 </navigation>

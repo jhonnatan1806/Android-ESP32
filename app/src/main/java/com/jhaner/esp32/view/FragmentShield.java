@@ -47,35 +47,6 @@ public class FragmentShield extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        URL google = null;
-        try {
-            google = new URL("http://192.241.140.103/script.php?method=showshields");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(google.openStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String input = null;
-        StringBuffer stringBuffer = new StringBuffer();
-        while (true)
-        {
-            try {
-                if (!((input = in.readLine()) != null)) break;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            stringBuffer.append(input);
-        }
-        try {
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String htmlData = stringBuffer.toString();
     }
 
     @Override
