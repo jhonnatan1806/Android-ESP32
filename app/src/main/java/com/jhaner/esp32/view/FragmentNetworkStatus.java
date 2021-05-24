@@ -55,18 +55,6 @@ public class FragmentNetworkStatus extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (networkInfo != null && networkInfo.isConnected())
-        {
-            // Si hay conexión a Internet en este momento
-        }
-        else
-        {
-            // No hay conexión a Internet en este momento
-
-        }
 
     }
 
