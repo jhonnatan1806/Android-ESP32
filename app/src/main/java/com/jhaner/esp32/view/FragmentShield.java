@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.databinding.FragmentModeBinding;
 import com.jhaner.esp32.databinding.FragmentShieldBinding;
+import com.jhaner.esp32.helper.AdapterShield;
+import com.jhaner.esp32.model.ModelShield;
 import com.jhaner.esp32.presenter.PresenterShield;
 
 import java.io.BufferedReader;
@@ -24,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class FragmentShield extends Fragment {
 
@@ -47,6 +52,7 @@ public class FragmentShield extends Fragment {
     {
         super.onViewCreated(view, savedInstanceState);
         presenterShield = new PresenterShield(view);
+
     }
 
     @Override
