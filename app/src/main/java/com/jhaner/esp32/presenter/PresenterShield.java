@@ -1,19 +1,15 @@
 package com.jhaner.esp32.presenter;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 
 import com.jhaner.esp32.R;
-import com.jhaner.esp32.helper.AdapterShield;
-import com.jhaner.esp32.helper.WorkerShield;
+import com.jhaner.esp32.model.AdapterShield;
 import com.jhaner.esp32.model.ModelShield;
 
 import org.json.JSONArray;
@@ -35,10 +31,6 @@ public class PresenterShield {
     public PresenterShield(View view) {
         this.view = view;
         this.initRecycler();
-        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class).build();
-        mWorkManager = WorkManager.getInstance(view.getContext());
-        mWorkManager.enqueue(workRequest);
-        mSavedWorkInfo = mWorkManager.getWorkInfosByTagLiveData("SHIELD");
     }
 
     private void initRecycler()
@@ -49,24 +41,20 @@ public class PresenterShield {
         recyclerView.setAdapter(new AdapterShield(dataset));
     }
 
-
-
     public void fillRecycler(String data)
     {
+        dataset.clear();
         int start = data.indexOf("[");
         int end = data.indexOf("]")+1;
         try {
             JSONArray list = new JSONArray(data.substring(start,end));
-            //JSONObject obj = new JSONObject(list.get(1).toString());
-            //this.dataset.add()
-            Log.i("tag",list.get(0).toString());
             if(list.length()>0)
             {
                 for(int i = 0 ; i< list.length(); i++)
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
                     this.modelShield = new ModelShield();
-                    //this.modelShield.setId(dataJSON.getString("shield_id"));
+                    this.modelShield.setId(dataJSON.getString("shield_id"));
                     this.modelShield.setName(dataJSON.getString("name"));
                     this.modelShield.setModel(dataJSON.getString("model"));
                     this.modelShield.setMac(dataJSON.getString("mac"));

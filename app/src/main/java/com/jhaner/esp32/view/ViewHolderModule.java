@@ -1,4 +1,4 @@
-package com.jhaner.esp32.helper;
+package com.jhaner.esp32.view;
 
 public class ViewHolderModule {
 }

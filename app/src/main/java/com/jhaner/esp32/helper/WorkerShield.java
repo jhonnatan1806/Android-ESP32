@@ -28,19 +28,18 @@ public class WorkerShield extends Worker {
         {
             URL url = new URL("http://192.241.140.103/script.php?method=showshields");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.addRequestProperty("Cache-Control", "no-cache");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String string;
             while((string=bufferedReader.readLine())!=null)
             {
                 stringBuilder.append(string+"\n");
             }
-
             connection.disconnect();
-
             Data outputData = new Data.Builder()
                     .putString("HTML", stringBuilder.toString())
                     .build();
-
             return Worker.Result.success(outputData);
         } catch (Exception exception) {
             Log.e("Error", "Error cleaning up", exception);

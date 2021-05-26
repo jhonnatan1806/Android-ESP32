@@ -1,4 +1,4 @@
-package com.jhaner.esp32.helper;
+package com.jhaner.esp32.model;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jhaner.esp32.R;
-import com.jhaner.esp32.helper.ViewHolderShield;
+import com.jhaner.esp32.view.ViewHolderShield;
 import com.jhaner.esp32.model.ModelShield;
 
 import java.util.ArrayList;
