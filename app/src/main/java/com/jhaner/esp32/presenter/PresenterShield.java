@@ -3,52 +3,86 @@ package com.jhaner.esp32.presenter;
 import android.util.Log;
 import android.view.View;
 
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.helper.AdapterShield;
+import com.jhaner.esp32.helper.WorkerShield;
 import com.jhaner.esp32.model.ModelShield;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static com.jhaner.esp32.helper.Constant.METHOD_SHOWSHIELDS;
-import static com.jhaner.esp32.helper.Constant.SERVER_URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PresenterShield {
 
-    private View viewShield;
+    private View view;
     private ModelShield modelShield;
-    private ArrayList<ModelShield> myDataset = new ArrayList<>();
+    private WorkManager mWorkManager;
+    private LiveData<List<WorkInfo>> mSavedWorkInfo;
+    private ArrayList<ModelShield> dataset = new ArrayList<>();
     private RecyclerView recyclerView;
 
     public PresenterShield(View view) {
-        viewShield = view;
-        modelShield = new ModelShield();
+        this.view = view;
         this.initRecycler();
-        //String data = this.sendGetRequestParam(SERVER_URL+METHOD_SHOWSHIELDS);
-
+        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class).build();
+        mWorkManager = WorkManager.getInstance(view.getContext());
+        mWorkManager.enqueue(workRequest);
+        mSavedWorkInfo = mWorkManager.getWorkInfosByTagLiveData("SHIELD");
     }
 
     private void initRecycler()
     {
-        ModelShield tests = new ModelShield();
-        tests.setId("12300000");
-        tests.setName("aaaaaaaa");
-        tests.setModel("model test");
-        tests.setMac("aa:bb:cc:dd:ee");
-        myDataset.add(tests);
-        ModelShield tests2 = new ModelShield();
-        tests2.setId("12300001");
-        tests2.setName("aaaaaaab");
-        tests2.setModel("model test2");
-        tests2.setMac("aa:bb:cc:dd:rr");
-        myDataset.add(tests2);
-        recyclerView = viewShield.findViewById(R.id.f_s_shield);
+        recyclerView = view.findViewById(R.id.f_s_shield);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(viewShield.getContext()));
-        AdapterShield adapterShield = new AdapterShield(myDataset);
-        recyclerView.setAdapter(adapterShield);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(new AdapterShield(dataset));
+    }
+
+
+
+    public void fillRecycler(String data)
+    {
+        int start = data.indexOf("[");
+        int end = data.indexOf("]")+1;
+        try {
+            JSONArray list = new JSONArray(data.substring(start,end));
+            //JSONObject obj = new JSONObject(list.get(1).toString());
+            //this.dataset.add()
+            Log.i("tag",list.get(0).toString());
+            if(list.length()>0)
+            {
+                for(int i = 0 ; i< list.length(); i++)
+                {
+                    JSONObject dataJSON = new JSONObject(list.get(i).toString());
+                    this.modelShield = new ModelShield();
+                    //this.modelShield.setId(dataJSON.getString("shield_id"));
+                    this.modelShield.setName(dataJSON.getString("name"));
+                    this.modelShield.setModel(dataJSON.getString("model"));
+                    this.modelShield.setMac(dataJSON.getString("mac"));
+                    this.dataset.add(modelShield);
+                }
+                recyclerView.setAdapter(new AdapterShield(dataset));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public LiveData<List<WorkInfo>> getOutputWorkInfo()
+    {
+        return mSavedWorkInfo;
     }
 
 }
