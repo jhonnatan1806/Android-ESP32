@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -61,7 +62,7 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
         public TextView name;
         public TextView model;
         public TextView mac;
-        public ImageButton btn_access;
+        public Button btn_access;
 
         public ViewHolder(@NonNull View itemView)
         {
@@ -70,7 +71,7 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
             name = (TextView) itemView.findViewById(R.id.c_s_name);
             model = (TextView) itemView.findViewById(R.id.c_s_model);
             mac = (TextView) itemView.findViewById(R.id.c_s_mac);
-            btn_access = (ImageButton) itemView.findViewById(R.id.c_s_btn_access);
+            btn_access = (Button) itemView.findViewById(R.id.c_s_btn_access);
         }
 
     }
