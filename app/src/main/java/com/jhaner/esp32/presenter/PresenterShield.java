@@ -29,7 +29,7 @@ public class PresenterShield {
 
     private void initRecycler()
     {
-        recyclerView = view.findViewById(R.id.f_s_recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerview_shields);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new AdapterShield(dataset));

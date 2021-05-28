@@ -39,13 +39,15 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
     {
         holder.module_id.setText(dataSet.get(position).getModule_id());
         holder.name.setText(dataSet.get(position).getName());
+        holder.type.setText(dataSet.get(position).getType());
         holder.description.setText(dataSet.get(position).getDescription());
         holder.itemView.setOnClickListener(view -> {
             String shield_id = dataSet.get(position).getShield_id();
             String module_id = dataSet.get(position).getModule_id();
             Bundle bundle = new Bundle();
             bundle.putString("SHIELD_ID", shield_id);
-            Navigation.findNavController(view).navigate(R.id.action_FragmentModule_to_fragmentForm, bundle);
+            bundle.putString("MODULE_ID", module_id);
+            Navigation.findNavController(view).navigate(R.id.action_FragmentModule_to_FragmentForm, bundle);
         });
     }
 
@@ -59,6 +61,7 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
 
         public TextView module_id;
         public TextView name;
+        public TextView type;
         public TextView description;
 
         public ViewHolder(@NonNull View itemView)
@@ -66,6 +69,7 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
             super(itemView);
             module_id = itemView.findViewById(R.id.c_m_module_id);
             name = itemView.findViewById(R.id.c_m_name);
+            type = itemView.findViewById(R.id.c_m_type);
             description = itemView.findViewById(R.id.c_m_description);
         }
 

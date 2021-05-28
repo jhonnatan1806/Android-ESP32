@@ -29,7 +29,7 @@ public class PresenterModule {
 
     private void initRecycler()
     {
-        recyclerView = view.findViewById(R.id.f_m_recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerview_modules);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new AdapterModule(dataset));
@@ -51,6 +51,7 @@ public class PresenterModule {
                     this.modelModule.setModule_id(dataJSON.getString("module_id"));
                     this.modelModule.setShield_id(dataJSON.getString("shield_id"));
                     this.modelModule.setName(dataJSON.getString("name"));
+                    this.modelModule.setType(dataJSON.getString("type"));
                     this.modelModule.setDescription(dataJSON.getString("description"));
                     this.dataset.add(modelModule);
                 }
