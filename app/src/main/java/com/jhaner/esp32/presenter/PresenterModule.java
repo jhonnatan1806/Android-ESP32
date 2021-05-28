@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.model.ModelModule;
-import com.jhaner.esp32.model.ModelShield;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +25,6 @@ public class PresenterModule {
     {
         this.view = view;
         this.initRecycler();
-        this.fillRecycler();
     }
 
     private void initRecycler()
@@ -37,14 +35,33 @@ public class PresenterModule {
         recyclerView.setAdapter(new AdapterModule(dataset));
     }
 
-    public void fillRecycler()
+    public void updateRecycler(String data)
     {
         dataset.clear();
-        modelModule = new ModelModule();
-        modelModule.setModule_id("11111");
-        modelModule.setStatus("test");
-        modelModule.setCycles("10");
-        dataset.add(modelModule);
-        recyclerView.getAdapter().notifyDataSetChanged();
+        int start = data.indexOf("[");
+        int end = data.indexOf("]")+1;
+        try {
+            JSONArray list = new JSONArray(data.substring(start,end));
+            if(list.length()!=0)
+            {
+                for(int i = 0 ; i< list.length(); i++)
+                {
+                    JSONObject dataJSON = new JSONObject(list.get(i).toString());
+                    this.modelModule= new ModelModule();
+                    this.modelModule.setShield_id(dataJSON.getString("shield_id"));
+                    this.modelModule.setModule_id(dataJSON.getString("module_id"));
+                    this.modelModule.setCreation_date(dataJSON.getString("creation_date"));
+                    this.modelModule.setStatus(dataJSON.getString("status"));
+                    this.modelModule.setCycles(dataJSON.getString("cycles"));
+                    this.modelModule.setCycles_completed(dataJSON.getString("cycles_completed"));
+                    this.modelModule.setTime_on(dataJSON.getString("time_on"));
+                    this.modelModule.setTime_off(dataJSON.getString("time_off"));
+                    this.dataset.add(modelModule);
+                }
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

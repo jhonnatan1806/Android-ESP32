@@ -35,7 +35,7 @@ public class PresenterShield {
         recyclerView.setAdapter(new AdapterShield(dataset));
     }
 
-    public void fillRecycler(String data)
+    public void updateRecycler(String data)
     {
         dataset.clear();
         int start = data.indexOf("[");

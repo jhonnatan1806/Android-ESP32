@@ -1,6 +1,9 @@
 package com.jhaner.esp32.view;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,10 +13,6 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.jhaner.esp32.databinding.FragmentShieldBinding;
 import com.jhaner.esp32.helper.WorkerShield;
@@ -30,7 +29,9 @@ public class FragmentShield extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class).addTag("FRAGMENTSHIELD").build();
+        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class)
+                .addTag("FRAGMENTSHIELD")
+                .build();
         workManager = WorkManager.getInstance(getContext());
         workManager.enqueue(workRequest);
         workInfoLiveData = workManager.getWorkInfoByIdLiveData(workRequest.getId());
@@ -53,7 +54,7 @@ public class FragmentShield extends Fragment {
             if ( workInfo!=null && finished)
             {
                 Data outputData = workInfo.getOutputData();
-                presenterShield.fillRecycler(outputData.getString("HTML"));
+                presenterShield.updateRecycler(outputData.getString("HTML"));
             }
         });
     }

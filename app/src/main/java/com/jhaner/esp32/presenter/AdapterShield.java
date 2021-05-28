@@ -1,11 +1,9 @@
 package com.jhaner.esp32.presenter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,7 +44,7 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
         holder.itemView.setOnClickListener(view -> {
             String shield_id = dataSet.get(position).getShield_id();
             Bundle bundle = new Bundle();
-            bundle.putString("shield_id", shield_id);
+            bundle.putString("SHIELD_ID", shield_id);
             Navigation.findNavController(view).navigate(R.id.action_FragmentShield_to_FragmentModule, bundle);
         });
     }
