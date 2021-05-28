@@ -27,5 +27,18 @@
         android:id="@+id/FragmentModule"
         android:name="com.jhaner.esp32.view.FragmentModule"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_module" />
+        tools:layout="@layout/fragment_module" >
+        <action
+            android:id="@+id/action_FragmentModule_to_fragmentForm"
+            app:destination="@id/FragmentForm" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentForm"
+        android:name="com.jhaner.esp32.view.FragmentForm"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_form">
+        <action
+            android:id="@+id/action_fragmentForm_to_FragmentModule"
+            app:destination="@id/FragmentModule" />
+    </fragment>
 </navigation>

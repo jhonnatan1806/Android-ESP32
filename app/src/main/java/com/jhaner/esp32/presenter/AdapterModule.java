@@ -1,13 +1,13 @@
 package com.jhaner.esp32.presenter;
 
-import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jhaner.esp32.R;
@@ -34,20 +34,19 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         holder.module_id.setText(dataSet.get(position).getModule_id());
-        if(dataSet.get(position).getStatus().equals("0")) {
-            holder.status.setText("OFF");
-            holder.btn_status.setText("ON");
-        }
-        else if (dataSet.get(position).getStatus().equals("1")) {
-            holder.status.setText("ON");
-            holder.btn_status.setText("OFF");
-        }
-        holder.cycles.setText(dataSet.get(position).getCycles_completed()+"/"+dataSet.get(position).getCycles());
+        holder.name.setText(dataSet.get(position).getName());
+        holder.description.setText(dataSet.get(position).getDescription());
+        holder.itemView.setOnClickListener(view -> {
+            String shield_id = dataSet.get(position).getShield_id();
+            String module_id = dataSet.get(position).getModule_id();
+            Bundle bundle = new Bundle();
+            bundle.putString("SHIELD_ID", shield_id);
+            Navigation.findNavController(view).navigate(R.id.action_FragmentModule_to_fragmentForm, bundle);
+        });
     }
 
     @Override
@@ -59,17 +58,15 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
     {
 
         public TextView module_id;
-        public TextView status;
-        public TextView cycles;
-        public Button btn_status;
+        public TextView name;
+        public TextView description;
 
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            module_id = (TextView) itemView.findViewById(R.id.c_m_module_id);
-            status = (TextView) itemView.findViewById(R.id.c_m_status);
-            cycles = (TextView) itemView.findViewById(R.id.c_m_cycles);
-            btn_status = (Button) itemView.findViewById(R.id.c_m_btn_status);
+            module_id = itemView.findViewById(R.id.c_m_module_id);
+            name = itemView.findViewById(R.id.c_m_name);
+            description = itemView.findViewById(R.id.c_m_description);
         }
 
     }

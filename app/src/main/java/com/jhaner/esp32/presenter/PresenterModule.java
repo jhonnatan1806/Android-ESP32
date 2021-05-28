@@ -48,14 +48,10 @@ public class PresenterModule {
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
                     this.modelModule= new ModelModule();
-                    this.modelModule.setShield_id(dataJSON.getString("shield_id"));
                     this.modelModule.setModule_id(dataJSON.getString("module_id"));
-                    this.modelModule.setCreation_date(dataJSON.getString("creation_date"));
-                    this.modelModule.setStatus(dataJSON.getString("status"));
-                    this.modelModule.setCycles(dataJSON.getString("cycles"));
-                    this.modelModule.setCycles_completed(dataJSON.getString("cycles_completed"));
-                    this.modelModule.setTime_on(dataJSON.getString("time_on"));
-                    this.modelModule.setTime_off(dataJSON.getString("time_off"));
+                    this.modelModule.setShield_id(dataJSON.getString("shield_id"));
+                    this.modelModule.setName(dataJSON.getString("name"));
+                    this.modelModule.setDescription(dataJSON.getString("description"));
                     this.dataset.add(modelModule);
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
