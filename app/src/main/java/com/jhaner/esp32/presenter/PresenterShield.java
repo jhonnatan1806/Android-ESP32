@@ -1,6 +1,5 @@
 package com.jhaner.esp32.presenter;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,14 +21,15 @@ public class PresenterShield {
     private ArrayList<ModelShield> dataset = new ArrayList<>();
     private RecyclerView recyclerView;
 
-    public PresenterShield(View view) {
+    public PresenterShield(View view)
+    {
         this.view = view;
         this.initRecycler();
     }
 
     private void initRecycler()
     {
-        recyclerView = view.findViewById(R.id.f_s_shield);
+        recyclerView = view.findViewById(R.id.f_s_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new AdapterShield(dataset));

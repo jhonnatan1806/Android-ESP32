@@ -40,7 +40,6 @@ public class FragmentShield extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentShieldBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
