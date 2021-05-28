@@ -33,7 +33,7 @@ public class FragmentShield extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class).addTag("WORKSHIELD").build();
+        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class).addTag("FRAGMENTSHIELD").build();
         mWorkManager = WorkManager.getInstance(getContext());
         mWorkManager.enqueue(workRequest);
         mSavedWorkInfo = mWorkManager.getWorkInfoByIdLiveData(workRequest.getId());
