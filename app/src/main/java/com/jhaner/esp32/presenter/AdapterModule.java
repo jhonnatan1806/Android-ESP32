@@ -67,10 +67,10 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            module_id = itemView.findViewById(R.id.c_m_module_id);
-            name = itemView.findViewById(R.id.c_m_name);
-            type = itemView.findViewById(R.id.c_m_type);
-            description = itemView.findViewById(R.id.c_m_description);
+            module_id = itemView.findViewById(R.id.cm_module_id);
+            name = itemView.findViewById(R.id.cm_name);
+            type = itemView.findViewById(R.id.cm_type);
+            description = itemView.findViewById(R.id.cm_description);
         }
 
     }

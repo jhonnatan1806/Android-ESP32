@@ -64,10 +64,10 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            shield_id = (TextView) itemView.findViewById(R.id.c_s_shield_id);
-            name = (TextView) itemView.findViewById(R.id.c_s_name);
-            model = (TextView) itemView.findViewById(R.id.c_s_model);
-            mac = (TextView) itemView.findViewById(R.id.c_s_mac);
+            shield_id = (TextView) itemView.findViewById(R.id.cs_shield_id);
+            name = (TextView) itemView.findViewById(R.id.cs_name);
+            model = (TextView) itemView.findViewById(R.id.cs_model);
+            mac = (TextView) itemView.findViewById(R.id.cs_mac);
         }
 
     }

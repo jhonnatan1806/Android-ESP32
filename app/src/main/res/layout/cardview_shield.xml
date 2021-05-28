@@ -37,7 +37,7 @@
                     android:text=":" />
 
                 <TextView
-                    android:id="@+id/c_s_shield_id"
+                    android:id="@+id/cs_shield_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -62,7 +62,7 @@
                     android:text=":" />
 
                 <TextView
-                    android:id="@+id/c_s_name"
+                    android:id="@+id/cs_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -86,7 +86,7 @@
                     android:text=":" />
 
                 <TextView
-                    android:id="@+id/c_s_model"
+                    android:id="@+id/cs_model"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -110,7 +110,7 @@
                     android:text=":" />
 
                 <TextView
-                    android:id="@+id/c_s_mac"
+                    android:id="@+id/cs_mac"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
