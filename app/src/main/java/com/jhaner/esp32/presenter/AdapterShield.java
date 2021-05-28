@@ -1,11 +1,11 @@
-package com.jhaner.esp32.model;
+package com.jhaner.esp32.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jhaner.esp32.R;
+import com.jhaner.esp32.model.ModelShield;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
         holder.name.setText(dataSet.get(position).getName());
         holder.model.setText(dataSet.get(position).getModel());
         holder.mac.setText(dataSet.get(position).getMac());
-        holder.btn_access.setOnClickListener(view -> {
+        holder.itemView.setOnClickListener(view -> {
             String shield_id = dataSet.get(position).getShield_id();
             Bundle bundle = new Bundle();
             bundle.putString("shield_id", shield_id);
@@ -57,12 +58,10 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-
         public TextView shield_id;
         public TextView name;
         public TextView model;
         public TextView mac;
-        public Button btn_access;
 
         public ViewHolder(@NonNull View itemView)
         {
@@ -71,7 +70,6 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
             name = (TextView) itemView.findViewById(R.id.c_s_name);
             model = (TextView) itemView.findViewById(R.id.c_s_model);
             mac = (TextView) itemView.findViewById(R.id.c_s_mac);
-            btn_access = (Button) itemView.findViewById(R.id.c_s_btn_access);
         }
 
     }

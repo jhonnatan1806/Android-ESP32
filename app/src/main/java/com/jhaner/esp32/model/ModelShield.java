@@ -10,13 +10,19 @@ public class ModelShield {
     public ModelShield() { }
 
     public void setShield_id(String shield_id) { this.shield_id = shield_id; }
+
     public void setName(String name) { this.name = name; }
+
     public void setModel(String model) { this.model = model; }
+
     public void setMac(String mac) { this.mac = mac; }
 
     public String getShield_id() { return shield_id; }
+
     public String getName() { return name; }
+
     public String getModel() { return model; }
+
     public String getMac() { return mac; }
 
 }

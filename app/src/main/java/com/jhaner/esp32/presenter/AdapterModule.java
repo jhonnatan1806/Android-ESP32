@@ -1,4 +1,4 @@
-package com.jhaner.esp32.model;
+package com.jhaner.esp32.presenter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,10 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jhaner.esp32.R;
+import com.jhaner.esp32.model.ModelModule;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,9 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-
+        holder.module_id.setText(dataSet.get(position).getModule_id());
+        holder.status.setText(dataSet.get(position).getStatus());
+        holder.cycles.setText(dataSet.get(position).getCycles());
     }
 
     @Override
