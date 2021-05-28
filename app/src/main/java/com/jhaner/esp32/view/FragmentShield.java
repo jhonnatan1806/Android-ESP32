@@ -11,7 +11,6 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +19,21 @@ import com.jhaner.esp32.databinding.FragmentShieldBinding;
 import com.jhaner.esp32.helper.WorkerShield;
 import com.jhaner.esp32.presenter.PresenterShield;
 
-import java.util.List;
-
 public class FragmentShield extends Fragment {
 
-    private PresenterShield presenterShield;
     private FragmentShieldBinding binding;
-    private WorkManager mWorkManager;
-    private LiveData<WorkInfo> mSavedWorkInfo;
+    private PresenterShield presenterShield;
+    private WorkManager workManager;
+    private LiveData<WorkInfo> workInfoLiveData;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class).addTag("FRAGMENTSHIELD").build();
-        mWorkManager = WorkManager.getInstance(getContext());
-        mWorkManager.enqueue(workRequest);
-        mSavedWorkInfo = mWorkManager.getWorkInfoByIdLiveData(workRequest.getId());
+        workManager = WorkManager.getInstance(getContext());
+        workManager.enqueue(workRequest);
+        workInfoLiveData = workManager.getWorkInfoByIdLiveData(workRequest.getId());
     }
 
     @Override
@@ -71,7 +68,7 @@ public class FragmentShield extends Fragment {
 
     public LiveData<WorkInfo> getOutputWorkInfo()
     {
-        return mSavedWorkInfo;
+        return workInfoLiveData;
     }
 
 }
