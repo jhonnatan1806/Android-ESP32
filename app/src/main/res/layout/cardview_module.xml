@@ -39,9 +39,9 @@
 
                 <TextView
                     android:id="@+id/textView1"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="ID" />
+                    android:text="MODULE ID" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -65,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="STATUS" />
 
@@ -91,7 +91,7 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:text="CYCLES" />
 
@@ -123,7 +123,7 @@
             <Button
                 android:id="@+id/c_m_btn_status"
                 android:layout_width="65dp"
-                android:layout_height="37dp"
+                android:layout_height="40dp"
                 android:layout_weight="0"
                 android:text="OFF"
                 android:textSize="12sp" />
@@ -131,7 +131,7 @@
             <Button
                 android:id="@+id/button2"
                 android:layout_width="65dp"
-                android:layout_height="37dp"
+                android:layout_height="40dp"
                 android:layout_weight="0"
                 android:text="EDIT"
                 android:textSize="12sp" />
