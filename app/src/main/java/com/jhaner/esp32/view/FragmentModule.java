@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.jhaner.esp32.databinding.FragmentModuleBinding;
 import com.jhaner.esp32.presenter.PresenterModule;
@@ -17,6 +18,7 @@ public class FragmentModule extends Fragment {
 
     private FragmentModuleBinding binding;
     private PresenterModule presenterModule;
+    private WorkManager workManager;
     private LiveData<WorkInfo> workInfoLiveData;
 
     @Override
