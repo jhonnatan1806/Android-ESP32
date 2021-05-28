@@ -13,6 +13,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.jhaner.esp32.helper.Constant.METHOD_SHOWSHIELDS;
+import static com.jhaner.esp32.helper.Constant.SERVER_URL;
+
 public class WorkerShield extends Worker {
 
     public WorkerShield(@NonNull Context context,
@@ -26,7 +29,7 @@ public class WorkerShield extends Worker {
         StringBuilder stringBuilder = new StringBuilder();
         try
         {
-            URL url = new URL("http://192.241.140.103/script.php?method=showshields");
+            URL url = new URL(SERVER_URL+ METHOD_SHOWSHIELDS);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.addRequestProperty("Cache-Control", "no-cache");

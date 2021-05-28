@@ -1,23 +1,25 @@
 package com.jhaner.esp32.model;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jhaner.esp32.R;
-import com.jhaner.esp32.view.ViewHolderShield;
-import com.jhaner.esp32.model.ModelShield;
 
 import java.util.ArrayList;
 
-public class AdapterShield extends RecyclerView.Adapter<ViewHolderShield> {
+public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder>
+{
+    private ArrayList<ModelShield> dataSet;
 
-    private ArrayList<ModelShield> mDataSet;
-
-    public AdapterShield(ArrayList<ModelShield> myDataSet) { this.mDataSet = myDataSet; }
+    public AdapterShield(ArrayList<ModelShield> dataSet) { this.dataSet = dataSet; }
 
     @Override
     public int getItemViewType(final int position) {
@@ -26,22 +28,51 @@ public class AdapterShield extends RecyclerView.Adapter<ViewHolderShield> {
 
     @NonNull
     @Override
-    public ViewHolderShield onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new ViewHolderShield(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderShield holder, int position) {
-        holder.getId().setText(mDataSet.get(position).getId());
-        holder.getName().setText(mDataSet.get(position).getName());
-        holder.getModel().setText(mDataSet.get(position).getModel());
-        holder.getMac().setText(mDataSet.get(position).getMac());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    {
+        holder.shield_id.setText(dataSet.get(position).getShield_id());
+        holder.name.setText(dataSet.get(position).getName());
+        holder.model.setText(dataSet.get(position).getModel());
+        holder.mac.setText(dataSet.get(position).getMac());
+        holder.btn_access.setOnClickListener(view -> {
+            String shield_id = dataSet.get(position).getShield_id();
+            Bundle bundle = new Bundle();
+            bundle.putString("shield_id", shield_id);
+            Navigation.findNavController(view).navigate(R.id.action_FragmentShield_to_FragmentModule, bundle);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return dataSet.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder
+    {
+
+        public TextView shield_id;
+        public TextView name;
+        public TextView model;
+        public TextView mac;
+        public ImageButton btn_access;
+
+        public ViewHolder(@NonNull View itemView)
+        {
+            super(itemView);
+            shield_id = (TextView) itemView.findViewById(R.id.c_s_shield_id);
+            name = (TextView) itemView.findViewById(R.id.c_s_name);
+            model = (TextView) itemView.findViewById(R.id.c_s_model);
+            mac = (TextView) itemView.findViewById(R.id.c_s_mac);
+            btn_access = (ImageButton) itemView.findViewById(R.id.c_s_btn_access);
+        }
+
     }
 }
 

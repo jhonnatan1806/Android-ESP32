@@ -2,11 +2,8 @@ package com.jhaner.esp32.presenter;
 
 import android.view.View;
 
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.model.AdapterShield;
@@ -17,14 +14,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PresenterShield {
 
     private View view;
     private ModelShield modelShield;
-    private WorkManager mWorkManager;
-    private LiveData<List<WorkInfo>> mSavedWorkInfo;
     private ArrayList<ModelShield> dataset = new ArrayList<>();
     private RecyclerView recyclerView;
 
@@ -54,7 +48,7 @@ public class PresenterShield {
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
                     this.modelShield = new ModelShield();
-                    this.modelShield.setId(dataJSON.getString("shield_id"));
+                    this.modelShield.setShield_id(dataJSON.getString("shield_id"));
                     this.modelShield.setName(dataJSON.getString("name"));
                     this.modelShield.setModel(dataJSON.getString("model"));
                     this.modelShield.setMac(dataJSON.getString("mac"));
@@ -68,9 +62,5 @@ public class PresenterShield {
 
     }
 
-    public LiveData<List<WorkInfo>> getOutputWorkInfo()
-    {
-        return mSavedWorkInfo;
-    }
 
 }

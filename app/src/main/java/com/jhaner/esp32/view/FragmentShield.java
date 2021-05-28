@@ -28,8 +28,6 @@ public class FragmentShield extends Fragment {
     private FragmentShieldBinding binding;
     private WorkManager mWorkManager;
     private LiveData<WorkInfo> mSavedWorkInfo;
-    private String mdata;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -59,8 +57,7 @@ public class FragmentShield extends Fragment {
             if ( workInfo!=null && finished)
             {
                 Data outputData = workInfo.getOutputData();
-                mdata = outputData.getString("HTML");
-                presenterShield.fillRecycler(mdata);
+                presenterShield.fillRecycler(outputData.getString("HTML"));
             }
         });
     }
