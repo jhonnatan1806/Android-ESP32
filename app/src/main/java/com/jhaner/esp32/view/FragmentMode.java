@@ -4,14 +4,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jhaner.esp32.R;
@@ -52,7 +51,6 @@ public class FragmentMode extends Fragment {
                 Snackbar.make(view, "ERROR NO NETWORK CONNECTION", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-
         });
 
     }

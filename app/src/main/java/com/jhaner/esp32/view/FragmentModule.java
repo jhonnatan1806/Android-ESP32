@@ -21,7 +21,6 @@ import com.jhaner.esp32.presenter.PresenterModule;
 public class FragmentModule extends Fragment {
 
     private FragmentModuleBinding binding;
-    private String shield_id;
     private Data outputData;
     private PresenterModule presenterModule;
     private WorkManager workManager;
@@ -32,9 +31,8 @@ public class FragmentModule extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-            this.shield_id = getArguments().getString("SHIELD_ID");
             this.outputData = new Data.Builder()
-                    .putString("SHIELD_ID", shield_id)
+                    .putString("SHIELD_ID", getArguments().getString("SHIELD_ID"))
                     .build();
         }
         if (this.outputData != null)
