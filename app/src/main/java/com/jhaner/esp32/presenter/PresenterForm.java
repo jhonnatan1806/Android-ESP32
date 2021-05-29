@@ -84,8 +84,13 @@ public class PresenterForm {
                 creation_date.setText(modelOperation.getCreation_date());
                 cycles.setText(modelOperation.getCycles());
                 cycles_completed.setText(modelOperation.getCycles_completed());
-                time_on.setText(modelOperation.getTime_on()+" sec.");
-                time_off.setText(modelOperation.getTime_off()+" sec.");
+                if( isNumeric(modelOperation.getTime_on()) && isNumeric(modelOperation.getTime_off()))
+                {
+                    int timeon = Integer.parseInt(modelOperation.getTime_on())/60;
+                    int timeoff = Integer.parseInt(modelOperation.getTime_off())/60;
+                    time_on.setText(String.valueOf(timeon)+" min.");
+                    time_off.setText(String.valueOf(timeoff)+" min.");
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

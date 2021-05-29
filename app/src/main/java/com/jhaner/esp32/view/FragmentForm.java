@@ -36,6 +36,7 @@ public class FragmentForm extends Fragment {
     private Button btn_send;
     private Button btn_on;
     private Button btn_off;
+    private Button btn_clear;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
