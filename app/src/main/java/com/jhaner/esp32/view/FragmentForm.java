@@ -9,7 +9,6 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.navigation.Navigation;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -69,6 +68,7 @@ public class FragmentForm extends Fragment {
         btn_on = view.findViewById(R.id.cs_btn_on);
         btn_off = view.findViewById(R.id.cs_btn_off);
         btn_send = view.findViewById(R.id.ct_btn_send);
+        btn_clear = view.findViewById(R.id.ct_btn_clear);
         presenterForm = new PresenterForm(view);
         this.getOutputWorkInfo().observe(getViewLifecycleOwner(), workInfo -> {
             boolean finished = workInfo.getState().isFinished();
@@ -89,9 +89,10 @@ public class FragmentForm extends Fragment {
                     .addTag("FRAGMENTFORM_STATUS")
                     .build();
             workManager.enqueue(workStatus);
-            Bundle bundle = new Bundle();
+            /*Bundle bundle = new Bundle();
             bundle.putString("SHIELD_ID", data.getString("SHIELD_ID"));
-            Navigation.findNavController(view).navigate(R.id.action_FragmentForm_to_FragmentModule, bundle);
+            Navigation.findNavController(view).navigate(R.id.action_FragmentForm_to_FragmentModule, bundle);*/
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
         btn_off.setOnClickListener(v -> {
             Data data = new Data.Builder()
@@ -104,9 +105,7 @@ public class FragmentForm extends Fragment {
                     .addTag("FRAGMENTFORM_STATUS")
                     .build();
             workManager.enqueue(workStatus);
-            Bundle bundle = new Bundle();
-            bundle.putString("SHIELD_ID", data.getString("SHIELD_ID"));
-            Navigation.findNavController(view).navigate(R.id.action_FragmentForm_to_FragmentModule, bundle);
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
         btn_send.setOnClickListener(v -> {
             ModelOperation modelOperation = presenterForm.makeOperation(presenterForm.dosage.getText().toString(),
@@ -132,11 +131,17 @@ public class FragmentForm extends Fragment {
                 workManager.enqueue(workStatus);
                 Bundle bundle = new Bundle();
                 bundle.putString("SHIELD_ID", data.getString("SHIELD_ID"));
-                Navigation.findNavController(view).navigate(R.id.action_FragmentForm_to_FragmentModule, bundle);
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
             }else{
                 Snackbar.make(view, "ERROR: INVALID DATA", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
+        });
+        btn_clear.setOnClickListener(v -> {
+            presenterForm.dosage.setText("");
+            presenterForm.quantity.setText("");
+            presenterForm.days.setText("");
+            presenterForm.maxWorking.setText("");
         });
 
     }
