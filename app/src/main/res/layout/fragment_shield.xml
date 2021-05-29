@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="Shields List"
+                android:text="SHIELD LIST"
                 android:textAlignment="center" />
 
             <androidx.recyclerview.widget.RecyclerView
