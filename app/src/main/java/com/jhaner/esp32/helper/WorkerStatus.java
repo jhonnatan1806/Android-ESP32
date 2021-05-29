@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -13,16 +12,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.jhaner.esp32.helper.Constant.ARG_CREATIONDATE;
+import static com.jhaner.esp32.helper.Constant.ARG_CYCLES;
+import static com.jhaner.esp32.helper.Constant.ARG_CYCLESCOMPLETED;
 import static com.jhaner.esp32.helper.Constant.ARG_MODULEID;
 import static com.jhaner.esp32.helper.Constant.ARG_SHIELDID;
-import static com.jhaner.esp32.helper.Constant.METHOD_SHOWDATA;
+import static com.jhaner.esp32.helper.Constant.ARG_STATUS;
+import static com.jhaner.esp32.helper.Constant.ARG_TIMEOFF;
+import static com.jhaner.esp32.helper.Constant.ARG_TIMEON;
+import static com.jhaner.esp32.helper.Constant.METHOD_MODIFYDATA;
 import static com.jhaner.esp32.helper.Constant.SERVER_URL;
 
-public class WorkerOperation extends Worker {
+public class WorkerStatus extends Worker {
 
 
-    public WorkerOperation(@NonNull Context context,
-                        @NonNull WorkerParameters params) {
+    public WorkerStatus(@NonNull Context context,
+                           @NonNull WorkerParameters params) {
         super(context, params);
     }
 
@@ -31,12 +36,22 @@ public class WorkerOperation extends Worker {
     {
         String shield_id = getInputData().getString("SHIELD_ID");
         String module_id = getInputData().getString("MODULE_ID");
+        String status = getInputData().getString("STATUS");
+        String[] additional = {"2021-01-01+00:00:00","0"};
+        String path = SERVER_URL    + METHOD_MODIFYDATA +
+                ARG_SHIELDID        + shield_id +
+                ARG_MODULEID        + module_id +
+                ARG_CREATIONDATE    + additional[0] +
+                ARG_STATUS          + status +
+                ARG_CYCLES          + additional[1] +
+                ARG_CYCLESCOMPLETED + additional[1] +
+                ARG_TIMEON          + additional[1] +
+                ARG_TIMEOFF         + additional[1];
+
         StringBuilder stringBuilder = new StringBuilder();
         try
         {
-            URL url = new URL(SERVER_URL + METHOD_SHOWDATA +
-                    ARG_SHIELDID + shield_id +
-                    ARG_MODULEID + module_id);
+            URL url = new URL(path);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.addRequestProperty("Cache-Control", "no-cache");
@@ -47,10 +62,7 @@ public class WorkerOperation extends Worker {
                 stringBuilder.append(string+"\n");
             }
             connection.disconnect();
-            Data outputData = new Data.Builder()
-                    .putString("HTML", stringBuilder.toString())
-                    .build();
-            return Worker.Result.success(outputData);
+            return Worker.Result.success();
         } catch (Exception exception) {
             Log.e("Error", "Error cleaning up", exception);
             return Worker.Result.failure();

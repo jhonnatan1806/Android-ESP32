@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.jhaner.esp32.helper.Constant.ARG_SHIELDID;
 import static com.jhaner.esp32.helper.Constant.METHOD_SHOWMODULES;
 import static com.jhaner.esp32.helper.Constant.SERVER_URL;
 
@@ -30,7 +31,7 @@ public class WorkerModule extends Worker {
         StringBuilder stringBuilder = new StringBuilder();
         try
         {
-            URL url = new URL(SERVER_URL + METHOD_SHOWMODULES + "&shield_id="+ shield_id);
+            URL url = new URL(SERVER_URL + METHOD_SHOWMODULES + ARG_SHIELDID + shield_id);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.addRequestProperty("Cache-Control", "no-cache");
