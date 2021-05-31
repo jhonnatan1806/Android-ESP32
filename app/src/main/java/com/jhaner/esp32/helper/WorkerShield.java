@@ -13,8 +13,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.jhaner.esp32.helper.Constant.METHOD_SHOWSHIELDS;
-import static com.jhaner.esp32.helper.Constant.SERVER_URL;
+import static com.jhaner.esp32.helper.Constants.METHOD_SHOWSHIELDS;
+import static com.jhaner.esp32.helper.Constants.SERVER_URL;
 
 public class WorkerShield extends Worker {
 

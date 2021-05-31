@@ -12,16 +12,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.jhaner.esp32.helper.Constant.ARG_CREATIONDATE;
-import static com.jhaner.esp32.helper.Constant.ARG_CYCLES;
-import static com.jhaner.esp32.helper.Constant.ARG_CYCLESCOMPLETED;
-import static com.jhaner.esp32.helper.Constant.ARG_MODULEID;
-import static com.jhaner.esp32.helper.Constant.ARG_SHIELDID;
-import static com.jhaner.esp32.helper.Constant.ARG_STATUS;
-import static com.jhaner.esp32.helper.Constant.ARG_TIMEOFF;
-import static com.jhaner.esp32.helper.Constant.ARG_TIMEON;
-import static com.jhaner.esp32.helper.Constant.METHOD_MODIFYDATA;
-import static com.jhaner.esp32.helper.Constant.SERVER_URL;
+import static com.jhaner.esp32.helper.Constants.ARG_CREATIONDATE;
+import static com.jhaner.esp32.helper.Constants.ARG_CYCLES;
+import static com.jhaner.esp32.helper.Constants.ARG_CYCLESCOMPLETED;
+import static com.jhaner.esp32.helper.Constants.ARG_MODULEID;
+import static com.jhaner.esp32.helper.Constants.ARG_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.ARG_STATUS;
+import static com.jhaner.esp32.helper.Constants.ARG_TIMEOFF;
+import static com.jhaner.esp32.helper.Constants.ARG_TIMEON;
+import static com.jhaner.esp32.helper.Constants.METHOD_MODIFYDATA;
+import static com.jhaner.esp32.helper.Constants.SERVER_URL;
 
 public class WorkerTask extends Worker {
 

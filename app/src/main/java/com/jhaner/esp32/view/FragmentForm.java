@@ -19,10 +19,18 @@ import com.google.android.material.snackbar.Snackbar;
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.databinding.FragmentFormBinding;
 import com.jhaner.esp32.helper.WorkerOperation;
-import com.jhaner.esp32.helper.WorkerStatus;
 import com.jhaner.esp32.helper.WorkerTask;
 import com.jhaner.esp32.model.ModelOperation;
 import com.jhaner.esp32.presenter.PresenterForm;
+
+import static com.jhaner.esp32.helper.Constants.KEY_CREATIONDATE;
+import static com.jhaner.esp32.helper.Constants.KEY_CYCLES;
+import static com.jhaner.esp32.helper.Constants.KEY_CYCLESCOMPLETED;
+import static com.jhaner.esp32.helper.Constants.KEY_MODULEID;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.KEY_STATUS;
+import static com.jhaner.esp32.helper.Constants.KEY_TIMEOFF;
+import static com.jhaner.esp32.helper.Constants.KEY_TIMEON;
 
 
 public class FragmentForm extends Fragment {
@@ -41,8 +49,8 @@ public class FragmentForm extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.outputData = new Data.Builder()
-                .putString("SHIELD_ID", getArguments().getString("SHIELD_ID"))
-                .putString("MODULE_ID", getArguments().getString("MODULE_ID"))
+                .putString(KEY_SHIELDID, getArguments().getString(KEY_SHIELDID))
+                .putString(KEY_MODULEID, getArguments().getString(KEY_MODULEID))
                 .build();
         WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerOperation.class)
                 .setInputData(outputData)
@@ -78,35 +86,45 @@ public class FragmentForm extends Fragment {
                 presenterForm.updateCardView(outputData.getString("HTML"));
             }
         });
+        //BUTTON MODULE ON + CLEAR DATA
         btn_on.setOnClickListener(v -> {
             Data data = new Data.Builder()
-                    .putString("SHIELD_ID", outputData.getString("SHIELD_ID"))
-                    .putString("MODULE_ID", outputData.getString("MODULE_ID"))
-                    .putString("STATUS", "1")
+                    .putString(KEY_SHIELDID, outputData.getString(KEY_SHIELDID))
+                    .putString(KEY_MODULEID, outputData.getString(KEY_MODULEID))
+                    .putString(KEY_STATUS, "1")
+                    .putString(KEY_CREATIONDATE, "2021-01-01+00:00:00")
+                    .putString(KEY_CYCLES, "0")
+                    .putString(KEY_CYCLESCOMPLETED, "0")
+                    .putString(KEY_TIMEON, "0")
+                    .putString(KEY_TIMEOFF, "0")
                     .build();
-            WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerStatus.class)
+            WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerTask.class)
                     .setInputData(data)
                     .addTag("FRAGMENTFORM_STATUS")
                     .build();
             workManager.enqueue(workStatus);
-            /*Bundle bundle = new Bundle();
-            bundle.putString("SHIELD_ID", data.getString("SHIELD_ID"));
-            Navigation.findNavController(view).navigate(R.id.action_FragmentForm_to_FragmentModule, bundle);*/
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
+        //BUTTON MODULE OFF + CLEAR TASK
         btn_off.setOnClickListener(v -> {
             Data data = new Data.Builder()
-                    .putString("SHIELD_ID", outputData.getString("SHIELD_ID"))
-                    .putString("MODULE_ID", outputData.getString("MODULE_ID"))
-                    .putString("STATUS", "0")
+                    .putString(KEY_SHIELDID, outputData.getString(KEY_SHIELDID))
+                    .putString(KEY_MODULEID, outputData.getString(KEY_MODULEID))
+                    .putString(KEY_STATUS, "0")
+                    .putString(KEY_CREATIONDATE, "2021-01-01+00:00:00")
+                    .putString(KEY_CYCLES, "0")
+                    .putString(KEY_CYCLESCOMPLETED, "0")
+                    .putString(KEY_TIMEON, "0")
+                    .putString(KEY_TIMEOFF, "0")
                     .build();
-            WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerStatus.class)
+            WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerTask.class)
                     .setInputData(data)
                     .addTag("FRAGMENTFORM_STATUS")
                     .build();
             workManager.enqueue(workStatus);
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
+        //BUTTON SEND DATA
         btn_send.setOnClickListener(v -> {
             ModelOperation modelOperation = presenterForm.makeOperation(presenterForm.dosage.getText().toString(),
                     presenterForm.quantity.getText().toString(),
@@ -115,22 +133,20 @@ public class FragmentForm extends Fragment {
             if(modelOperation!=null)
             {
                 Data data = new Data.Builder()
-                        .putString("SHIELD_ID", outputData.getString("SHIELD_ID"))
-                        .putString("MODULE_ID", outputData.getString("MODULE_ID"))
-                        .putString("STATUS", modelOperation.getStatus())
-                        .putString("CREATION_DATE", modelOperation.getCreation_date())
-                        .putString("CYCLES", modelOperation.getCycles())
-                        .putString("CYCLES_COMPLETED", modelOperation.getCycles_completed())
-                        .putString("TIME_ON", modelOperation.getTime_on())
-                        .putString("TIME_OFF", modelOperation.getTime_off())
+                        .putString(KEY_SHIELDID, outputData.getString(KEY_SHIELDID))
+                        .putString(KEY_MODULEID, outputData.getString(KEY_MODULEID))
+                        .putString(KEY_STATUS, modelOperation.getStatus())
+                        .putString(KEY_CREATIONDATE, modelOperation.getCreation_date())
+                        .putString(KEY_CYCLES, modelOperation.getCycles())
+                        .putString(KEY_CYCLESCOMPLETED, modelOperation.getCycles_completed())
+                        .putString(KEY_TIMEON, modelOperation.getTime_on())
+                        .putString(KEY_TIMEOFF, modelOperation.getTime_off())
                         .build();
                 WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerTask.class)
                         .setInputData(data)
                         .addTag("FRAGMENTFORM_TASK")
                         .build();
                 workManager.enqueue(workStatus);
-                Bundle bundle = new Bundle();
-                bundle.putString("SHIELD_ID", data.getString("SHIELD_ID"));
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
             }else{
                 Snackbar.make(view, "ERROR: INVALID DATA", Snackbar.LENGTH_LONG)

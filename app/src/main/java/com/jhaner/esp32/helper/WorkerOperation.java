@@ -13,10 +13,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.jhaner.esp32.helper.Constant.ARG_MODULEID;
-import static com.jhaner.esp32.helper.Constant.ARG_SHIELDID;
-import static com.jhaner.esp32.helper.Constant.METHOD_SHOWDATA;
-import static com.jhaner.esp32.helper.Constant.SERVER_URL;
+import static com.jhaner.esp32.helper.Constants.ARG_MODULEID;
+import static com.jhaner.esp32.helper.Constants.ARG_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.METHOD_SHOWDATA;
+import static com.jhaner.esp32.helper.Constants.SERVER_URL;
 
 public class WorkerOperation extends Worker {
 

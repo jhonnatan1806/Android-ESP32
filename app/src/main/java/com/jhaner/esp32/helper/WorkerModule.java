@@ -13,9 +13,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.jhaner.esp32.helper.Constant.ARG_SHIELDID;
-import static com.jhaner.esp32.helper.Constant.METHOD_SHOWMODULES;
-import static com.jhaner.esp32.helper.Constant.SERVER_URL;
+import static com.jhaner.esp32.helper.Constants.ARG_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.METHOD_SHOWMODULES;
+import static com.jhaner.esp32.helper.Constants.SERVER_URL;
 
 public class WorkerModule extends Worker {
 

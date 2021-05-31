@@ -1,5 +1,6 @@
 package com.jhaner.esp32.presenter;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,6 +14,9 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static com.jhaner.esp32.helper.Constants.SIMPLEDATEFORMAT;
+import static com.jhaner.esp32.helper.Constants.TIMEZONE;
 
 public class PresenterForm {
 
@@ -132,7 +136,7 @@ public class PresenterForm {
             int timeon = 0;
             int timeoff = 0;
             int cycles = 0;
-            if (workingtime<86400) {
+            if (workingtime<1440) {
                 varintervale =  this.intervale(workingtime, maxWorkingTime);
                 if(varintervale>1) {
                     timeon = (int)Math.round(workingtime/varintervale)*60;
@@ -144,8 +148,9 @@ public class PresenterForm {
                     timeoff = (int)Math.round((24*60) - workingtime)*60;
                     cycles = (int)Math.round(days);
                 }
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd+HH:mm:ss");
-                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("America/Lima"));
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SIMPLEDATEFORMAT);
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
                 String creation_date = simpleDateFormat.format(new Date());
 
                 mOperation = new ModelOperation();
