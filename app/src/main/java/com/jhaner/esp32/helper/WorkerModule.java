@@ -28,7 +28,7 @@ public class WorkerModule extends Worker {
         super(context, params);
     }
 
-    @Override
+    @Override @NonNull
     public Result doWork()
     {
         String shield_id = getInputData().getString(KEY_SHIELDID);

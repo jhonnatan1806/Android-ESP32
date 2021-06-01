@@ -15,9 +15,12 @@ import com.jhaner.esp32.model.ModelModule;
 
 import java.util.ArrayList;
 
+import static com.jhaner.esp32.helper.Constants.KEY_MODULEID;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+
 public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder> {
 
-    private ArrayList<ModelModule> dataSet;
+    private final ArrayList<ModelModule> dataSet;
 
     public AdapterModule(ArrayList<ModelModule> dataSet) { this.dataSet = dataSet; }
 
@@ -26,8 +29,7 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
         return R.layout.cardview_module;
     }
 
-    @NonNull
-    @Override
+    @Override @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
@@ -42,11 +44,9 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
         holder.type.setText(dataSet.get(position).getType());
         holder.description.setText(dataSet.get(position).getDescription());
         holder.itemView.setOnClickListener(view -> {
-            String shield_id = dataSet.get(position).getShield_id();
-            String module_id = dataSet.get(position).getModule_id();
             Bundle bundle = new Bundle();
-            bundle.putString("SHIELD_ID", shield_id);
-            bundle.putString("MODULE_ID", module_id);
+            bundle.putString(KEY_SHIELDID, dataSet.get(position).getShield_id());
+            bundle.putString(KEY_MODULEID, dataSet.get(position).getModule_id());
             Navigation.findNavController(view).navigate(R.id.action_FragmentModule_to_FragmentForm, bundle);
         });
     }
@@ -56,9 +56,8 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
         return dataSet.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
     {
-
         public TextView module_id;
         public TextView name;
         public TextView type;
@@ -72,6 +71,5 @@ public class AdapterModule extends RecyclerView.Adapter<AdapterModule.ViewHolder
             type = itemView.findViewById(R.id.cm_type);
             description = itemView.findViewById(R.id.cm_description);
         }
-
     }
 }

@@ -15,19 +15,18 @@ import com.jhaner.esp32.model.ModelShield;
 
 import java.util.ArrayList;
 
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+
 public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder>
 {
-    private ArrayList<ModelShield> dataSet;
+    private final ArrayList<ModelShield> dataSet;
 
     public AdapterShield(ArrayList<ModelShield> dataSet) { this.dataSet = dataSet; }
 
     @Override
-    public int getItemViewType(final int position) {
-        return R.layout.cardview_shield;
-    }
+    public int getItemViewType(final int position) { return R.layout.cardview_shield; }
 
-    @NonNull
-    @Override
+    @Override @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
@@ -42,9 +41,8 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
         holder.model.setText(dataSet.get(position).getModel());
         holder.mac.setText(dataSet.get(position).getMac());
         holder.itemView.setOnClickListener(view -> {
-            String shield_id = dataSet.get(position).getShield_id();
             Bundle bundle = new Bundle();
-            bundle.putString("SHIELD_ID", shield_id);
+            bundle.putString(KEY_SHIELDID, dataSet.get(position).getShield_id());
             Navigation.findNavController(view).navigate(R.id.action_FragmentShield_to_FragmentModule, bundle);
         });
     }
@@ -54,7 +52,7 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
         return dataSet.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
     {
         public TextView shield_id;
         public TextView name;
@@ -69,7 +67,6 @@ public class AdapterShield extends RecyclerView.Adapter<AdapterShield.ViewHolder
             model = (TextView) itemView.findViewById(R.id.cs_model);
             mac = (TextView) itemView.findViewById(R.id.cs_mac);
         }
-
     }
 }
 

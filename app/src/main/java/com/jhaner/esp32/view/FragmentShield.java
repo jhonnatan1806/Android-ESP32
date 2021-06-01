@@ -18,11 +18,14 @@ import com.jhaner.esp32.databinding.FragmentShieldBinding;
 import com.jhaner.esp32.helper.WorkerShield;
 import com.jhaner.esp32.presenter.PresenterShield;
 
+import java.util.Objects;
+
+import static com.jhaner.esp32.helper.Constants.HTML_KEY;
+
 public class FragmentShield extends Fragment {
 
     private FragmentShieldBinding binding;
     private PresenterShield presenterShield;
-    private WorkManager workManager;
     private LiveData<WorkInfo> workInfoLiveData;
 
     @Override
@@ -32,14 +35,14 @@ public class FragmentShield extends Fragment {
         WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class)
                 .addTag("FRAGMENTSHIELD")
                 .build();
-        workManager = WorkManager.getInstance(getContext());
+        WorkManager workManager = WorkManager.getInstance(requireContext());
         workManager.enqueue(workRequest);
         workInfoLiveData = workManager.getWorkInfoByIdLiveData(workRequest.getId());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         binding = FragmentShieldBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -51,10 +54,10 @@ public class FragmentShield extends Fragment {
         this.getOutputWorkInfo().observe(getViewLifecycleOwner(), workInfo ->
         {
             boolean finished = workInfo.getState().isFinished();
-            if ( workInfo!=null && finished)
+            if (finished)
             {
                 Data outputData = workInfo.getOutputData();
-                presenterShield.updateRecycler(outputData.getString("HTML"));
+                presenterShield.updateRecycler(Objects.requireNonNull(outputData.getString(HTML_KEY)));
             }
         });
     }

@@ -18,12 +18,14 @@ import com.jhaner.esp32.databinding.FragmentModuleBinding;
 import com.jhaner.esp32.helper.WorkerModule;
 import com.jhaner.esp32.presenter.PresenterModule;
 
+import java.util.Objects;
+
+import static com.jhaner.esp32.helper.Constants.HTML_KEY;
+
 public class FragmentModule extends Fragment {
 
     private FragmentModuleBinding binding;
-    private Data outputData;
     private PresenterModule presenterModule;
-    private WorkManager workManager;
     private LiveData<WorkInfo> workInfoLiveData;
 
     @Override
@@ -31,25 +33,21 @@ public class FragmentModule extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-            this.outputData = new Data.Builder()
+            Data outputData = new Data.Builder()
                     .putString("SHIELD_ID", getArguments().getString("SHIELD_ID"))
                     .build();
-        }
-        if (this.outputData != null)
-        {
             WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerModule.class)
                     .setInputData(outputData)
                     .addTag("FRAGMENTMODULE")
                     .build();
-            workManager = WorkManager.getInstance(getContext());
+            WorkManager workManager = WorkManager.getInstance(requireContext());
             workManager.enqueue(workRequest);
             workInfoLiveData = workManager.getWorkInfoByIdLiveData(workRequest.getId());
         }
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentModuleBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -62,10 +60,10 @@ public class FragmentModule extends Fragment {
         this.getOutputWorkInfo().observe(getViewLifecycleOwner(), workInfo ->
         {
             boolean finished = workInfo.getState().isFinished();
-            if ( workInfo!=null && finished)
+            if (finished)
             {
                 Data outputData = workInfo.getOutputData();
-                presenterModule.updateRecycler(outputData.getString("HTML"));
+                presenterModule.updateRecycler(Objects.requireNonNull(outputData.getString(HTML_KEY)));
             }
         });
 

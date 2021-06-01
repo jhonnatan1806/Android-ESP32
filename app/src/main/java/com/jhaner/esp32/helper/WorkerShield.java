@@ -26,7 +26,7 @@ public class WorkerShield extends Worker {
         super(context, params);
     }
 
-    @Override
+    @Override @NonNull
     public Result doWork()
     {
         String path = SERVER_URL+ METHOD_SHOWSHIELDS;
