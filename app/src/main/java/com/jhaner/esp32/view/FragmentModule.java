@@ -68,7 +68,6 @@ public class FragmentModule extends Fragment {
                 presenterModule.updateRecycler(Objects.requireNonNull(outputData.getString(HTML_KEY)));
             }
         });
-
     }
 
     @Override
