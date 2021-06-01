@@ -21,6 +21,7 @@ import com.jhaner.esp32.presenter.PresenterShield;
 import java.util.Objects;
 
 import static com.jhaner.esp32.helper.Constants.HTML_KEY;
+import static com.jhaner.esp32.helper.Constants.TAG_FRAGMENTSHIELD;
 
 public class FragmentShield extends Fragment {
 
@@ -33,7 +34,7 @@ public class FragmentShield extends Fragment {
     {
         super.onCreate(savedInstanceState);
         WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerShield.class)
-                .addTag("FRAGMENTSHIELD")
+                .addTag(TAG_FRAGMENTSHIELD)
                 .build();
         WorkManager workManager = WorkManager.getInstance(requireContext());
         workManager.enqueue(workRequest);

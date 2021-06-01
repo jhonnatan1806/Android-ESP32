@@ -13,12 +13,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PresenterModule {
 
-    private View view;
-    private ModelModule modelModule;
-    private ArrayList<ModelModule> dataset = new ArrayList<>();
+    private final View view;
+    private final ArrayList<ModelModule> dataset = new ArrayList<>();
     private RecyclerView recyclerView;
 
     public PresenterModule(View view)
@@ -47,15 +47,15 @@ public class PresenterModule {
                 for(int i = 0 ; i< list.length(); i++)
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
-                    this.modelModule= new ModelModule();
-                    this.modelModule.setModule_id(dataJSON.getString("module_id"));
-                    this.modelModule.setShield_id(dataJSON.getString("shield_id"));
-                    this.modelModule.setName(dataJSON.getString("name"));
-                    this.modelModule.setType(dataJSON.getString("type"));
-                    this.modelModule.setDescription(dataJSON.getString("description"));
+                    ModelModule modelModule = new ModelModule();
+                    modelModule.setModule_id(dataJSON.getString("module_id"));
+                    modelModule.setShield_id(dataJSON.getString("shield_id"));
+                    modelModule.setName(dataJSON.getString("name"));
+                    modelModule.setType(dataJSON.getString("type"));
+                    modelModule.setDescription(dataJSON.getString("description"));
                     this.dataset.add(modelModule);
                 }
-                recyclerView.getAdapter().notifyDataSetChanged();
+                Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();

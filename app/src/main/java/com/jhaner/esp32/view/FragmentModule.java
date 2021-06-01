@@ -21,6 +21,8 @@ import com.jhaner.esp32.presenter.PresenterModule;
 import java.util.Objects;
 
 import static com.jhaner.esp32.helper.Constants.HTML_KEY;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.TAG_FRAGMENTMODULE;
 
 public class FragmentModule extends Fragment {
 
@@ -34,11 +36,11 @@ public class FragmentModule extends Fragment {
         if (getArguments() != null)
         {
             Data outputData = new Data.Builder()
-                    .putString("SHIELD_ID", getArguments().getString("SHIELD_ID"))
+                    .putString(KEY_SHIELDID, getArguments().getString(KEY_SHIELDID))
                     .build();
             WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerModule.class)
                     .setInputData(outputData)
-                    .addTag("FRAGMENTMODULE")
+                    .addTag(TAG_FRAGMENTMODULE)
                     .build();
             WorkManager workManager = WorkManager.getInstance(requireContext());
             workManager.enqueue(workRequest);
@@ -47,8 +49,8 @@ public class FragmentModule extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         binding = FragmentModuleBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

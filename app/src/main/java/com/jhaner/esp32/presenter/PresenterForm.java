@@ -17,11 +17,14 @@ import java.util.TimeZone;
 
 import static com.jhaner.esp32.helper.Constants.DATE_FORMAT;
 import static com.jhaner.esp32.helper.Constants.DATE_TIMEZONE;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_CYCLESCOMPLETED;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_MODULEID;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_STATUS;
 
 public class PresenterForm {
 
-    private View view;
-    private ModelOperation modelOperation;
+    private final View view;
     private TextView shield_id;
     private TextView module_id;
     private TextView status;
@@ -62,9 +65,10 @@ public class PresenterForm {
         time_off = view.findViewById(R.id.co_time_off);
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateCardView(String data)
     {
-        modelOperation = null;
+        ModelOperation modelOperation;
         int start = data.indexOf("{");
         int end = data.indexOf("}")+1;
         try {
@@ -92,8 +96,8 @@ public class PresenterForm {
                 {
                     int timeon = Integer.parseInt(modelOperation.getTime_on())/60;
                     int timeoff = Integer.parseInt(modelOperation.getTime_off())/60;
-                    time_on.setText(String.valueOf(timeon)+" min.");
-                    time_off.setText(String.valueOf(timeoff)+" min.");
+                    time_on.setText(timeon +" min.");
+                    time_off.setText(timeoff +" min.");
                 }
             }
         } catch (JSONException e) {
@@ -103,8 +107,7 @@ public class PresenterForm {
 
     private boolean validation(String data)
     {
-        if(this.isNumeric(data) && Integer.parseInt (data)>0) return true;
-        return false;
+        return (this.isNumeric(data) && Integer.parseInt(data) > 0);
     }
 
     private  boolean isNumeric(String str)
@@ -117,13 +120,12 @@ public class PresenterForm {
     {
         int count = 1;
         while((workingtime/count)>maxworkingtime){ count ++; }
-        Double result = new Double(count);
-        return result;
+        return (double) count;
     }
 
     public ModelOperation makeOperation(String dataDosage, String dataQuantity, String dataDays, String dataMaxWorkingTime)
     {
-        ModelOperation mOperation = null;
+        ModelOperation mOperation;
         if(validation(dataDosage) && validation(dataQuantity) && validation(dataDays) && validation(dataMaxWorkingTime))
         {
             double dosage = Double.parseDouble(dataDosage); //dosage in minutes
@@ -132,18 +134,18 @@ public class PresenterForm {
             double  maxWorkingTime = Double.parseDouble(dataMaxWorkingTime); //max time
             double dailygoal = quantity/days; // x ml per day
             double workingtime =  (dailygoal / dosage); // working time per day in min
-            double varintervale = 0.0;
-            int timeon = 0;
-            int timeoff = 0;
-            int cycles = 0;
+            double varintervale;
+            int timeon, timeoff, cycles;
             if (workingtime<1440) {
                 varintervale =  this.intervale(workingtime, maxWorkingTime);
-                if(varintervale>1) {
+                if(varintervale>1)
+                {
                     timeon = (int)Math.round(workingtime/varintervale)*60;
                     timeoff = (int)Math.round(((24*60) - workingtime)/varintervale)*60;
                     cycles = (int)Math.round(days*varintervale);
                 }
-                else {
+                else
+                {
                     timeon = (int)Math.round(workingtime)*60;
                     timeoff = (int)Math.round((24*60) - workingtime)*60;
                     cycles = (int)Math.round(days);
@@ -154,19 +156,19 @@ public class PresenterForm {
                 String creation_date = simpleDateFormat.format(new Date());
 
                 mOperation = new ModelOperation();
-                mOperation.setShield_id("00000000");
-                mOperation.setModule_id("00000000");
-                mOperation.setStatus("0");
+                mOperation.setShield_id(DEFAULT_SHIELDID);
+                mOperation.setModule_id(DEFAULT_MODULEID);
+                mOperation.setStatus(DEFAULT_STATUS);
                 mOperation.setCreation_date(creation_date);
                 mOperation.setCycles(String.valueOf(cycles));
-                mOperation.setCycles_completed("0");
+                mOperation.setCycles_completed(DEFAULT_CYCLESCOMPLETED);
                 mOperation.setTime_on(String.valueOf(timeon));
                 mOperation.setTime_off(String.valueOf(timeoff));
                 return mOperation;
             }
 
         }
-        return mOperation;
+        return null;
     }
 
 

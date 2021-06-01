@@ -13,12 +13,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PresenterShield {
 
-    private View view;
-    private ModelShield modelShield;
-    private ArrayList<ModelShield> dataset = new ArrayList<>();
+    private final View view;
+    private final ArrayList<ModelShield> dataset = new ArrayList<>();
     private RecyclerView recyclerView;
 
     public PresenterShield(View view)
@@ -47,14 +47,14 @@ public class PresenterShield {
                 for(int i = 0 ; i< list.length(); i++)
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
-                    this.modelShield = new ModelShield();
-                    this.modelShield.setShield_id(dataJSON.getString("shield_id"));
-                    this.modelShield.setName(dataJSON.getString("name"));
-                    this.modelShield.setModel(dataJSON.getString("model"));
-                    this.modelShield.setMac(dataJSON.getString("mac"));
+                    ModelShield modelShield = new ModelShield();
+                    modelShield.setShield_id(dataJSON.getString("shield_id"));
+                    modelShield.setName(dataJSON.getString("name"));
+                    modelShield.setModel(dataJSON.getString("model"));
+                    modelShield.setMac(dataJSON.getString("mac"));
                     this.dataset.add(modelShield);
                 }
-                recyclerView.getAdapter().notifyDataSetChanged();
+                Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();

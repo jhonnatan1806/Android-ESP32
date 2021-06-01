@@ -16,6 +16,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.databinding.FragmentModeBinding;
 
+import static com.jhaner.esp32.helper.Constants.ERROR_FRAGMENTMODE;
+
 public class FragmentMode extends Fragment {
 
     private FragmentModeBinding binding;
@@ -27,7 +29,7 @@ public class FragmentMode extends Fragment {
     }
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
     {
         binding = FragmentModeBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -36,10 +38,9 @@ public class FragmentMode extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        binding.modeWifi.setOnClickListener((View v) ->
-        {
-            ConnectivityManager connectivityManager = (ConnectivityManager)
-                    getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        binding.modeWifi.setOnClickListener((View v) -> {
+            ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected())
             {
@@ -48,11 +49,10 @@ public class FragmentMode extends Fragment {
             }
             else
             {
-                Snackbar.make(view, "ERROR NO NETWORK CONNECTION", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, ERROR_FRAGMENTMODE, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-
     }
 
     @Override

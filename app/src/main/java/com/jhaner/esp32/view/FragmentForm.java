@@ -23,6 +23,15 @@ import com.jhaner.esp32.helper.WorkerTask;
 import com.jhaner.esp32.model.ModelOperation;
 import com.jhaner.esp32.presenter.PresenterForm;
 
+import java.util.Objects;
+
+import static com.jhaner.esp32.helper.Constants.DEFAULT_CREATIONDATE;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_CYCLES;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_CYCLESCOMPLETED;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_TIMEOFF;
+import static com.jhaner.esp32.helper.Constants.DEFAULT_TIMEON;
+import static com.jhaner.esp32.helper.Constants.ERROR_FRAGMENTFORM;
+import static com.jhaner.esp32.helper.Constants.HTML_KEY;
 import static com.jhaner.esp32.helper.Constants.KEY_CREATIONDATE;
 import static com.jhaner.esp32.helper.Constants.KEY_CYCLES;
 import static com.jhaner.esp32.helper.Constants.KEY_CYCLESCOMPLETED;
@@ -31,7 +40,7 @@ import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
 import static com.jhaner.esp32.helper.Constants.KEY_STATUS;
 import static com.jhaner.esp32.helper.Constants.KEY_TIMEOFF;
 import static com.jhaner.esp32.helper.Constants.KEY_TIMEON;
-
+import static com.jhaner.esp32.helper.Constants.TAG_FRAGMENTFORM;
 
 public class FragmentForm extends Fragment {
 
@@ -40,30 +49,29 @@ public class FragmentForm extends Fragment {
     private PresenterForm presenterForm;
     private WorkManager workManager;
     private LiveData<WorkInfo> workInfoLiveData;
-    private Button btn_send;
-    private Button btn_on;
-    private Button btn_off;
-    private Button btn_clear;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        this.outputData = new Data.Builder()
-                .putString(KEY_SHIELDID, getArguments().getString(KEY_SHIELDID))
-                .putString(KEY_MODULEID, getArguments().getString(KEY_MODULEID))
-                .build();
-        WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerOperation.class)
-                .setInputData(outputData)
-                .addTag("FRAGMENTFORM_OPERATION")
-                .build();
-        workManager = WorkManager.getInstance(getContext());
-        workManager.enqueue(workRequest);
-        workInfoLiveData = workManager.getWorkInfoByIdLiveData(workRequest.getId());
+        if (getArguments() != null)
+        {
+            this.outputData = new Data.Builder()
+                    .putString(KEY_SHIELDID, getArguments().getString(KEY_SHIELDID))
+                    .putString(KEY_MODULEID, getArguments().getString(KEY_MODULEID))
+                    .build();
+            WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerOperation.class)
+                    .setInputData(outputData)
+                    .addTag(ERROR_FRAGMENTFORM)
+                    .build();
+            workManager = WorkManager.getInstance(requireContext());
+            workManager.enqueue(workRequest);
+            workInfoLiveData = workManager.getWorkInfoByIdLiveData(workRequest.getId());
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentFormBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -73,17 +81,17 @@ public class FragmentForm extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        btn_on = view.findViewById(R.id.cs_btn_on);
-        btn_off = view.findViewById(R.id.cs_btn_off);
-        btn_send = view.findViewById(R.id.ct_btn_send);
-        btn_clear = view.findViewById(R.id.ct_btn_clear);
+        Button btn_on = view.findViewById(R.id.cs_btn_on);
+        Button btn_off = view.findViewById(R.id.cs_btn_off);
+        Button btn_send = view.findViewById(R.id.ct_btn_send);
+        Button btn_clear = view.findViewById(R.id.ct_btn_clear);
         presenterForm = new PresenterForm(view);
         this.getOutputWorkInfo().observe(getViewLifecycleOwner(), workInfo -> {
             boolean finished = workInfo.getState().isFinished();
-            if ( workInfo!=null && finished)
+            if (finished)
             {
                 Data outputData = workInfo.getOutputData();
-                presenterForm.updateCardView(outputData.getString("HTML"));
+                presenterForm.updateCardView(Objects.requireNonNull(outputData.getString(HTML_KEY)));
             }
         });
         //BUTTON MODULE ON + CLEAR DATA
@@ -92,15 +100,15 @@ public class FragmentForm extends Fragment {
                     .putString(KEY_SHIELDID, outputData.getString(KEY_SHIELDID))
                     .putString(KEY_MODULEID, outputData.getString(KEY_MODULEID))
                     .putString(KEY_STATUS, "1")
-                    .putString(KEY_CREATIONDATE, "2021-01-01+00:00:00")
-                    .putString(KEY_CYCLES, "0")
-                    .putString(KEY_CYCLESCOMPLETED, "0")
-                    .putString(KEY_TIMEON, "0")
-                    .putString(KEY_TIMEOFF, "0")
+                    .putString(KEY_CREATIONDATE, DEFAULT_CREATIONDATE)
+                    .putString(KEY_CYCLES, DEFAULT_CYCLES)
+                    .putString(KEY_CYCLESCOMPLETED, DEFAULT_CYCLESCOMPLETED)
+                    .putString(KEY_TIMEON, DEFAULT_TIMEON)
+                    .putString(KEY_TIMEOFF, DEFAULT_TIMEOFF)
                     .build();
             WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerTask.class)
                     .setInputData(data)
-                    .addTag("FRAGMENTFORM_STATUS")
+                    .addTag(TAG_FRAGMENTFORM)
                     .build();
             workManager.enqueue(workStatus);
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
@@ -111,15 +119,15 @@ public class FragmentForm extends Fragment {
                     .putString(KEY_SHIELDID, outputData.getString(KEY_SHIELDID))
                     .putString(KEY_MODULEID, outputData.getString(KEY_MODULEID))
                     .putString(KEY_STATUS, "0")
-                    .putString(KEY_CREATIONDATE, "2021-01-01+00:00:00")
-                    .putString(KEY_CYCLES, "0")
-                    .putString(KEY_CYCLESCOMPLETED, "0")
-                    .putString(KEY_TIMEON, "0")
-                    .putString(KEY_TIMEOFF, "0")
+                    .putString(KEY_CREATIONDATE, DEFAULT_CREATIONDATE)
+                    .putString(KEY_CYCLES, DEFAULT_CYCLES)
+                    .putString(KEY_CYCLESCOMPLETED, DEFAULT_CYCLESCOMPLETED)
+                    .putString(KEY_TIMEON, DEFAULT_TIMEON)
+                    .putString(KEY_TIMEOFF, DEFAULT_TIMEOFF)
                     .build();
             WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerTask.class)
                     .setInputData(data)
-                    .addTag("FRAGMENTFORM_STATUS")
+                    .addTag(TAG_FRAGMENTFORM)
                     .build();
             workManager.enqueue(workStatus);
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
@@ -144,12 +152,12 @@ public class FragmentForm extends Fragment {
                         .build();
                 WorkRequest workStatus  = new OneTimeWorkRequest.Builder(WorkerTask.class)
                         .setInputData(data)
-                        .addTag("FRAGMENTFORM_TASK")
+                        .addTag(TAG_FRAGMENTFORM)
                         .build();
                 workManager.enqueue(workStatus);
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
             }else{
-                Snackbar.make(view, "ERROR: INVALID DATA", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, ERROR_FRAGMENTFORM, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
