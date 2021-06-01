@@ -30,7 +30,7 @@ import static com.jhaner.esp32.helper.Constants.DEFAULT_CYCLES;
 import static com.jhaner.esp32.helper.Constants.DEFAULT_CYCLESCOMPLETED;
 import static com.jhaner.esp32.helper.Constants.DEFAULT_TIMEOFF;
 import static com.jhaner.esp32.helper.Constants.DEFAULT_TIMEON;
-import static com.jhaner.esp32.helper.Constants.ERROR_FRAGMENTFORM;
+import static com.jhaner.esp32.helper.Constants.MSG_INVALID_ERROR;
 import static com.jhaner.esp32.helper.Constants.HTML_KEY;
 import static com.jhaner.esp32.helper.Constants.KEY_CREATIONDATE;
 import static com.jhaner.esp32.helper.Constants.KEY_CYCLES;
@@ -40,6 +40,9 @@ import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
 import static com.jhaner.esp32.helper.Constants.KEY_STATUS;
 import static com.jhaner.esp32.helper.Constants.KEY_TIMEOFF;
 import static com.jhaner.esp32.helper.Constants.KEY_TIMEON;
+import static com.jhaner.esp32.helper.Constants.MSG_MODULEOFF;
+import static com.jhaner.esp32.helper.Constants.MSG_MODULEON;
+import static com.jhaner.esp32.helper.Constants.MSG_SENDTASK;
 import static com.jhaner.esp32.helper.Constants.TAG_FRAGMENTFORM;
 
 public class FragmentForm extends Fragment {
@@ -62,7 +65,7 @@ public class FragmentForm extends Fragment {
                     .build();
             WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerOperation.class)
                     .setInputData(outputData)
-                    .addTag(ERROR_FRAGMENTFORM)
+                    .addTag(MSG_INVALID_ERROR)
                     .build();
             workManager = WorkManager.getInstance(requireContext());
             workManager.enqueue(workRequest);
@@ -111,6 +114,8 @@ public class FragmentForm extends Fragment {
                     .addTag(TAG_FRAGMENTFORM)
                     .build();
             workManager.enqueue(workStatus);
+            Snackbar.make(view, MSG_MODULEON, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
         //BUTTON MODULE OFF + CLEAR TASK
@@ -130,6 +135,8 @@ public class FragmentForm extends Fragment {
                     .addTag(TAG_FRAGMENTFORM)
                     .build();
             workManager.enqueue(workStatus);
+            Snackbar.make(view, MSG_MODULEOFF, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
         });
         //BUTTON SEND DATA
@@ -155,9 +162,11 @@ public class FragmentForm extends Fragment {
                         .addTag(TAG_FRAGMENTFORM)
                         .build();
                 workManager.enqueue(workStatus);
+                Snackbar.make(view, MSG_SENDTASK, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 requireActivity().getOnBackPressedDispatcher().onBackPressed();
             }else{
-                Snackbar.make(view, ERROR_FRAGMENTFORM, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, MSG_INVALID_ERROR, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

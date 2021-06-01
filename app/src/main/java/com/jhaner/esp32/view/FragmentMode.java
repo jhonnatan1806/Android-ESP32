@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.jhaner.esp32.R;
 import com.jhaner.esp32.databinding.FragmentModeBinding;
 
-import static com.jhaner.esp32.helper.Constants.ERROR_FRAGMENTMODE;
+import static com.jhaner.esp32.helper.Constants.MSG_CONNECTION_ERROR;
 
 public class FragmentMode extends Fragment {
 
@@ -49,7 +49,7 @@ public class FragmentMode extends Fragment {
             }
             else
             {
-                Snackbar.make(view, ERROR_FRAGMENTMODE, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, MSG_CONNECTION_ERROR, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

@@ -50,8 +50,12 @@ public class Constants {
     public static final String HTML_CACHECONTROL = "Cache-Control";
     public static final String HTML_NOCACHE = "no-cache";
 
-    public static final String ERROR_FRAGMENTMODE = "ERROR: NO NETWORK CONNECTION";
-    public static final String ERROR_FRAGMENTFORM = "ERROR: INVALID DATA";
+    public static final String MSG_CONNECTION_ERROR = "ERROR: NO NETWORK CONNECTION";
+    public static final String MSG_INVALID_ERROR = "ERROR: INVALID DATA";
+
+    public static final String MSG_MODULEON = "SEND: MODULE ON + TASK REMOVED";
+    public static final String MSG_MODULEOFF = "SEND: MODULE OFF + TASK REMOVED";
+    public static final String MSG_SENDTASK = "SEND: ASSINGED TASK";
 
     public static final String TAG_FRAGMENTSHIELD = "Work FragmentShield";
     public static final String TAG_FRAGMENTMODULE = "Work FragmentModule";
