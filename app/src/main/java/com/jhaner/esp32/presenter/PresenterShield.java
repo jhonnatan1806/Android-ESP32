@@ -15,6 +15,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.jhaner.esp32.helper.Constants.KEY_MAC;
+import static com.jhaner.esp32.helper.Constants.KEY_MODEL;
+import static com.jhaner.esp32.helper.Constants.KEY_NAME;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+
 public class PresenterShield {
 
     private final View view;
@@ -48,10 +53,10 @@ public class PresenterShield {
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
                     ModelShield modelShield = new ModelShield();
-                    modelShield.setShield_id(dataJSON.getString("shield_id"));
-                    modelShield.setName(dataJSON.getString("name"));
-                    modelShield.setModel(dataJSON.getString("model"));
-                    modelShield.setMac(dataJSON.getString("mac"));
+                    modelShield.setShield_id(dataJSON.getString(KEY_SHIELDID));
+                    modelShield.setName(dataJSON.getString(KEY_NAME));
+                    modelShield.setModel(dataJSON.getString(KEY_MODEL));
+                    modelShield.setMac(dataJSON.getString(KEY_MAC));
                     this.dataset.add(modelShield);
                 }
                 Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();

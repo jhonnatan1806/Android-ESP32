@@ -21,6 +21,14 @@ import static com.jhaner.esp32.helper.Constants.DEFAULT_CYCLESCOMPLETED;
 import static com.jhaner.esp32.helper.Constants.DEFAULT_MODULEID;
 import static com.jhaner.esp32.helper.Constants.DEFAULT_SHIELDID;
 import static com.jhaner.esp32.helper.Constants.DEFAULT_STATUS;
+import static com.jhaner.esp32.helper.Constants.KEY_CREATIONDATE;
+import static com.jhaner.esp32.helper.Constants.KEY_CYCLES;
+import static com.jhaner.esp32.helper.Constants.KEY_CYCLESCOMPLETED;
+import static com.jhaner.esp32.helper.Constants.KEY_MODULEID;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.KEY_STATUS;
+import static com.jhaner.esp32.helper.Constants.KEY_TIMEOFF;
+import static com.jhaner.esp32.helper.Constants.KEY_TIMEON;
 
 public class PresenterForm {
 
@@ -74,14 +82,14 @@ public class PresenterForm {
         try {
             JSONObject dataJSON = new JSONObject(data.substring(start,end));
             modelOperation = new ModelOperation();
-            modelOperation.setShield_id(dataJSON.getString("shield_id"));
-            modelOperation.setModule_id(dataJSON.getString("module_id"));
-            modelOperation.setStatus(dataJSON.getString("status"));
-            modelOperation.setCreation_date(dataJSON.getString("creation_date"));
-            modelOperation.setCycles(dataJSON.getString("cycles"));
-            modelOperation.setCycles_completed(dataJSON.getString("cycles_completed"));
-            modelOperation.setTime_on(dataJSON.getString("time_on"));
-            modelOperation.setTime_off(dataJSON.getString("time_off"));
+            modelOperation.setShield_id(dataJSON.getString(KEY_SHIELDID));
+            modelOperation.setModule_id(dataJSON.getString(KEY_MODULEID));
+            modelOperation.setStatus(dataJSON.getString(KEY_STATUS));
+            modelOperation.setCreation_date(dataJSON.getString(KEY_CREATIONDATE));
+            modelOperation.setCycles(dataJSON.getString(KEY_CYCLES));
+            modelOperation.setCycles_completed(dataJSON.getString(KEY_CYCLESCOMPLETED));
+            modelOperation.setTime_on(dataJSON.getString(KEY_TIMEON));
+            modelOperation.setTime_off(dataJSON.getString(KEY_TIMEOFF));
 
             shield_id.setText(modelOperation.getShield_id());
             module_id.setText(modelOperation.getModule_id());
@@ -112,7 +120,7 @@ public class PresenterForm {
 
     private  boolean isNumeric(String str)
     {
-        try {Double.parseDouble(str); return true;}
+        try { Double.parseDouble(str); return true;}
         catch(NumberFormatException e){return false;}
     }
 

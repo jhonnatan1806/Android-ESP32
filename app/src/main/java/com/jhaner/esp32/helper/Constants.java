@@ -26,14 +26,21 @@ public class Constants {
     public static final String DEFAULT_TIMEON = "0";
     public static final String DEFAULT_TIMEOFF = "0";
 
-    public static final String KEY_SHIELDID = "SHIELD_ID";
-    public static final String KEY_MODULEID = "MODULE_ID";
-    public static final String KEY_STATUS = "STATUS";
-    public static final String KEY_CREATIONDATE = "CREATION_DATE";
-    public static final String KEY_CYCLES = "CYCLES";
-    public static final String KEY_CYCLESCOMPLETED = "CYCLES_COMPLETED";
-    public static final String KEY_TIMEON = "TIME_ON";
-    public static final String KEY_TIMEOFF = "TIME_OFF";
+    public static final String KEY_SHIELDID = "shield_id";
+    public static final String KEY_MODULEID = "module_id";
+    public static final String KEY_STATUS = "status";
+    public static final String KEY_CREATIONDATE = "creation_date";
+    public static final String KEY_CYCLES = "cycles";
+    public static final String KEY_CYCLESCOMPLETED = "cycles_completed";
+    public static final String KEY_TIMEON = "time_on";
+    public static final String KEY_TIMEOFF = "time_off";
+
+    public static final String KEY_NAME = "name";
+    public static final String KEY_MODEL = "model";
+    public static final String KEY_MAC = "mac";
+
+    public static final String KEY_TYPE = "type";
+    public static final String KEY_DESCRIPTION = "time_off";
 
     public static final String DATE_FORMAT = "yyyy-MM-dd+HH:mm:ss";
     public static final String DATE_TIMEZONE = "America/Lima";

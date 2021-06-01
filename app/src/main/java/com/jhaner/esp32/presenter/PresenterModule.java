@@ -15,6 +15,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.jhaner.esp32.helper.Constants.KEY_DESCRIPTION;
+import static com.jhaner.esp32.helper.Constants.KEY_MODULEID;
+import static com.jhaner.esp32.helper.Constants.KEY_NAME;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.KEY_TYPE;
+
 public class PresenterModule {
 
     private final View view;
@@ -48,11 +54,11 @@ public class PresenterModule {
                 {
                     JSONObject dataJSON = new JSONObject(list.get(i).toString());
                     ModelModule modelModule = new ModelModule();
-                    modelModule.setModule_id(dataJSON.getString("module_id"));
-                    modelModule.setShield_id(dataJSON.getString("shield_id"));
-                    modelModule.setName(dataJSON.getString("name"));
-                    modelModule.setType(dataJSON.getString("type"));
-                    modelModule.setDescription(dataJSON.getString("description"));
+                    modelModule.setModule_id(dataJSON.getString(KEY_MODULEID));
+                    modelModule.setShield_id(dataJSON.getString(KEY_SHIELDID));
+                    modelModule.setName(dataJSON.getString(KEY_NAME));
+                    modelModule.setType(dataJSON.getString(KEY_TYPE));
+                    modelModule.setDescription(dataJSON.getString(KEY_DESCRIPTION));
                     this.dataset.add(modelModule);
                 }
                 Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
