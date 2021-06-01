@@ -65,7 +65,7 @@ public class FragmentForm extends Fragment {
                     .build();
             WorkRequest workRequest  = new OneTimeWorkRequest.Builder(WorkerOperation.class)
                     .setInputData(outputData)
-                    .addTag(MSG_INVALID_ERROR)
+                    .addTag(TAG_FRAGMENTFORM)
                     .build();
             workManager = WorkManager.getInstance(requireContext());
             workManager.enqueue(workRequest);

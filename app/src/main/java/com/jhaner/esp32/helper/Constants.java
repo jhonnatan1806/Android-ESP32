@@ -40,7 +40,7 @@ public class Constants {
     public static final String KEY_MAC = "mac";
 
     public static final String KEY_TYPE = "type";
-    public static final String KEY_DESCRIPTION = "time_off";
+    public static final String KEY_DESCRIPTION = "description";
 
     public static final String DATE_FORMAT = "yyyy-MM-dd+HH:mm:ss";
     public static final String DATE_TIMEZONE = "America/Lima";
