@@ -1,7 +1,6 @@
 package com.jhaner.esp32.helper;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -20,27 +19,38 @@ import static com.jhaner.esp32.helper.Constants.ARG_SHIELDID;
 import static com.jhaner.esp32.helper.Constants.ARG_STATUS;
 import static com.jhaner.esp32.helper.Constants.ARG_TIMEOFF;
 import static com.jhaner.esp32.helper.Constants.ARG_TIMEON;
+import static com.jhaner.esp32.helper.Constants.HTML_CACHECONTROL;
+import static com.jhaner.esp32.helper.Constants.HTML_METHOD;
+import static com.jhaner.esp32.helper.Constants.HTML_NOCACHE;
+import static com.jhaner.esp32.helper.Constants.KEY_CREATIONDATE;
+import static com.jhaner.esp32.helper.Constants.KEY_CYCLES;
+import static com.jhaner.esp32.helper.Constants.KEY_CYCLESCOMPLETED;
+import static com.jhaner.esp32.helper.Constants.KEY_MODULEID;
+import static com.jhaner.esp32.helper.Constants.KEY_SHIELDID;
+import static com.jhaner.esp32.helper.Constants.KEY_STATUS;
+import static com.jhaner.esp32.helper.Constants.KEY_TIMEOFF;
+import static com.jhaner.esp32.helper.Constants.KEY_TIMEON;
 import static com.jhaner.esp32.helper.Constants.METHOD_MODIFYDATA;
 import static com.jhaner.esp32.helper.Constants.SERVER_URL;
 
 public class WorkerTask extends Worker {
 
-    public WorkerTask(@NonNull Context context,
-                        @NonNull WorkerParameters params) {
+    public WorkerTask(@NonNull Context context, @NonNull WorkerParameters params)
+    {
         super(context, params);
     }
 
     @Override
     public Result doWork()
     {
-        String shield_id = getInputData().getString("SHIELD_ID");
-        String module_id = getInputData().getString("MODULE_ID");
-        String status = getInputData().getString("STATUS");
-        String creation_date = getInputData().getString("CREATION_DATE");
-        String cycles = getInputData().getString("CYCLES");
-        String cycles_completed = getInputData().getString("CYCLES_COMPLETED");
-        String time_on = getInputData().getString("TIME_ON");
-        String time_off = getInputData().getString("TIME_OFF");
+        String shield_id = getInputData().getString(KEY_SHIELDID);
+        String module_id = getInputData().getString(KEY_MODULEID );
+        String status = getInputData().getString(KEY_STATUS);
+        String creation_date = getInputData().getString(KEY_CREATIONDATE);
+        String cycles = getInputData().getString(KEY_CYCLES);
+        String cycles_completed = getInputData().getString(KEY_CYCLESCOMPLETED);
+        String time_on = getInputData().getString(KEY_TIMEON);
+        String time_off = getInputData().getString(KEY_TIMEOFF);
         String path = SERVER_URL    + METHOD_MODIFYDATA +
                 ARG_SHIELDID        + shield_id +
                 ARG_MODULEID        + module_id +
@@ -56,19 +66,18 @@ public class WorkerTask extends Worker {
         {
             URL url = new URL(path);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.addRequestProperty("Cache-Control", "no-cache");
+            connection.setRequestMethod(HTML_METHOD);
+            connection.addRequestProperty(HTML_CACHECONTROL, HTML_NOCACHE);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String string;
             while((string=bufferedReader.readLine())!=null)
             {
-                stringBuilder.append(string+"\n");
+                stringBuilder.append(string);
             }
             connection.disconnect();
-            Log.i("a",path);
             return Worker.Result.success();
-        } catch (Exception exception) {
-            Log.e("Error", "Error cleaning up", exception);
+        } catch (Exception exception)
+        {
             return Worker.Result.failure();
         }
     }

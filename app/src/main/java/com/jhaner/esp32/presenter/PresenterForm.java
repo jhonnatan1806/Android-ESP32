@@ -15,8 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static com.jhaner.esp32.helper.Constants.SIMPLEDATEFORMAT;
-import static com.jhaner.esp32.helper.Constants.TIMEZONE;
+import static com.jhaner.esp32.helper.Constants.DATE_FORMAT;
+import static com.jhaner.esp32.helper.Constants.DATE_TIMEZONE;
 
 public class PresenterForm {
 
@@ -149,8 +149,8 @@ public class PresenterForm {
                     cycles = (int)Math.round(days);
                 }
                 @SuppressLint("SimpleDateFormat")
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SIMPLEDATEFORMAT);
-                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(TIMEZONE));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
                 String creation_date = simpleDateFormat.format(new Date());
 
                 mOperation = new ModelOperation();

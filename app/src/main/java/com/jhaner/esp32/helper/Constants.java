@@ -35,6 +35,12 @@ public class Constants {
     public static final String KEY_TIMEON = "TIME_ON";
     public static final String KEY_TIMEOFF = "TIME_OFF";
 
-    public static final String SIMPLEDATEFORMAT = "yyyy-MM-dd+HH:mm:ss";
-    public static final String TIMEZONE= "America/Lima";
+    public static final String DATE_FORMAT = "yyyy-MM-dd+HH:mm:ss";
+    public static final String DATE_TIMEZONE = "America/Lima";
+
+    public static final String HTML_METHOD = "GET";
+    public static final String HTML_KEY = "HTML";
+    public static final String HTML_CACHECONTROL = "Cache-Control";
+    public static final String HTML_NOCACHE = "no-cache";
+
 }
